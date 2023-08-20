@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>ARCHIVE ARCADE > WRITE</title>
+	<link rel="stylesheet" href="../style.css">
+	<link rel="icon" href="../assets/favicon/favicon-blue.png">
+
+	<style>
+		:root {
+			--primary: var(--blue);
+		}
+	</style>
+
+	<script src="../assets/p5.js"></script>
+	<script src="../assets/ml5.min.js"></script>
+	<script src="../assets/Tone.js"></script>
+</head>
+<body>
+	<div class="game-intro">
+		<button class="return" onclick="backHome()">
+			<p>RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ </p>
+		</button>
+		<h1 class="game-name">
+			<span class="game-name-line-2">Write</span>
+			<span class="game-name-line-1">Write</span>
+			<span class="game-name-line-0">Write</span>
+			<span class="game-name-line-1">Write</span>
+			<span class="game-name-line-2">Write</span>
+		</h1>
+		<div class="game-info">
+			<div class="game-info-desc">
+				<img src="../assets/branding/eyes.svg" class="game-info-eyes">
+				<p class="game-info-highlight">Write the archive.</p>
+				<p>Smile *only* when the letter turns blue! Try to get a new high score! <span class="game-info-outline">No matter what you see, keep smiling.</span></p>
+				<p>Easy enough?</p>
+			</div>
+			<button class="game-info-start game-info-wait" onclick="startGame()">Loading...</button>
+		</div>
+	</div>
+	<div class="game-transition">
+		<div id="game-transition-1">Ready?</div>
+		<div id="game-transition-2">Set?</div>
+		<div id="game-transition-3">Smile!</div>
+	</div>
+	<div class="game-container">
+		<div class="game-ui">
+			<div class="game-smile-container">
+				<div class="game-smile">
+					<svg version="1.1" x="0px" y="0px" viewBox="0 0 145.7 145.7"
+					style="enable-background:new 0 0 145.7 145.7;">
+						<g>
+							<circle class="smile-head" cx="72.8" cy="72.8" r="67.8"/>
+							<path class="smile-mouth" d="M103.2,76.6c0,16.8-13.6,30.3-30.3,30.3S42.6,93.4,42.6,76.6"/>
+							<g class="smile-eyes">
+								<circle cx="53.2" cy="45.3" r="8.1"/>
+								<circle cx="92.4" cy="45.3" r="8.1"/>
+							</g>
+						</g>
+					</svg>
+				</div>
+			</div>
+			<div class="game-interface-container"><div class="game-interface">
+				<div id="game-score">Score: <span>0</span></div>
+				<div id="game-timer" class="timer-write">WAIT...</div>
+				<div id="game-highscore">Record: <span>0</span></div>
+			</div></div>
+		</div>
+		<div class="game-topics"></div>
+	</div>
+	<div class="game-end">
+		<div id="game-end-1">Congrats!<br>You smiled <span></span> times.</div>
+		<div id="game-end-2">That means you smiled through the making of <span id="rights"></span> atrocit<span id="rights-s">ies</span>.</div>
+		<div id="game-end-3">You set a new record!</div>
+		<div class="game-end-buttons">
+			<button id="game-end-restart" onclick="startGame()">Play again?</button>
+			<button id="game-end-home" onclick="backHomeEnd()">Go back home</button>
+		</div>
+	</div>
+	<div class="video-container"></div>
+
+	<script>
+		if (getCookie("write-highscore") == "") {
+				setCookie("write-highscore", 15, 30);
+		} 
+		let order = [];
+		let smileScore = 0;
+		let end = true;
+		let interface = document.querySelector(".game-interface-container");
+		let timer = document.querySelector("#game-timer");
+		let smiling = false;
+		let smile = document.querySelector(".game-smile-container")
+		let smileHead = document.querySelector(".smile-head");
+		let smileEyes = document.querySelector(".smile-eyes");
+		let smileMouth = document.querySelector(".smile-mouth");
+		let score = document.querySelector("#game-score span");
+		let highscore = document.querySelector("#game-highscore span");
+		let transition1 = document.querySelector("#game-transition-1");
+		let transition2 = document.querySelector("#game-transition-2");
+		let transition3 = document.querySelector("#game-transition-3");
+		let gameEndContainer = document.querySelector(".game-end")
+		let gameEndScore = document.querySelector("#game-end-1 span");
+		let gameEndWreck = document.querySelector("#game-end-2 #rights");
+		let gameEndWreckS = document.querySelector("#game-end-2 #rights-s");
+		let gameEndRecord = document.querySelector("#game-end-3");
+		function startGame() {
+			order = [];
+			smileScore = 0;
+			end = true;
+			gameIntro.style.transform = "translateX(-110%)";
+			transition1.style.animationName = "";
+			transition2.style.animationName = "";
+			transition3.style.animationName = "";
+			gameTopic.style.opacity = "0";
+			gameEndContainer.style.transform = "scale(0)";
+			// Initalize order for game
+			let nums = [];
+			for (num=0; num<topics.length; num++) {
+				nums.push(num);
+			}
+			i = nums.length,
+			j = 0;
+			while (i--) {
+				j = Math.floor(Math.random() * (i+1));
+				order.push(nums[j]);
+				nums.splice(j,1);
+			}
+			// Display highscore
+			if (getCookie("write-highscore") == "") {
+				highscore.innerText = "15";
+			} else {
+				highscore.innerText = getCookie("write-highscore");
+			}
+			round = 0;
+			setTimeout(function() {
+				transition1.style.animationName = "game-transition";
+				synth1.triggerAttackRelease("C4", "8n");
+				setTimeout(function() {
+					transition2.style.animationName = "game-transition";
+					synth1.triggerAttackRelease("C4", "8n");
+					setTimeout(function() {
+						gameTopic.innerHTML = "";
+						gameTopic.style.opacity = "1";
+						transition3.style.animationName = "game-transition";
+						synth1.triggerAttackRelease("C5", "8n");
+						setTimeout(function() {
+							end = false;
+							smile.style.transform = "scale(1)";
+							interface.style.transform = "scale(1)";
+							generateWord();
+						}, 1500);
+					}, 1500);
+				}, 1500);
+			}, 500);
+		}
+
+		let topics = [
+			"Fascist World Leaders",
+			"International Conflict",
+			"Lawless Billionaires",
+			"Police Brutality",
+			"Voter Suppression",
+			"Microplastics",
+			"Extreme Weather",
+			"Late-stage Capitalism",
+			"Union Busting",
+			"Wildfires",
+			"Inflation",
+			"Anti-vaxxers",
+			"Radicalism",
+			"Monopolization",
+			"Corrupt Politicians",
+			"Depression",
+			"Mass Murder",
+			"Medical Debt",
+			"White Supremacy",
+			"Mass Extinction",
+			"Nuclear Proliferation",
+			"Forced Labor",
+			"Polarization",
+			"War Crimes",
+			"Religious Genocide",
+			"Global Recession",
+			"Soaring Tuition",
+			"Insurrection",
+			"Mass Surveillance",
+			"Natural Resource Depletion"
+		]
+		let gameTopic = document.querySelector(".game-topics");
+		let round = 0;
+		let subRound = 0;
+		let currentTopicE, letters;
+		let roundLength = 2;
+		let targetLetter = false;
+		let currentRound = 0;
+		let currentLetter = "";
+		let letterOptions = ["a","b",'c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
+		let buffer = 0;
+		// START SUBROUND
+		function generateWord() {
+			let currentTopic = topics[order[round]];
+			let temp = `<div class='game-topic-container'><div class='game-topic' id='round${round}' style="transform:scale(0);">`;
+			for (i=0; i<currentTopic.length; i++) {
+				temp += `<span style='transform:scale(0);opacity:0;'>${currentTopic[i]}</span>`;
+			}
+			temp += "</div></div>";
+			gameTopic.innerHTML += temp;
+			currentTopicE = document.querySelector(`#round${round}`);
+			letters = document.querySelectorAll(`#round${round} span`);
+			setTimeout(function () {
+				currentTopicE.style.transform = "scale(1)";
+			}, 10);
+			roundLength = Math.round(Math.random()*3+4);
+			subRound = 0;
+			buffer = 0;
+			currentRound = 0;
+			currentLetter = letters[0].innerText;
+			synth2.triggerAttackRelease("B2", "8n");
+			for (i=0; i<letters.length; i++) {
+				letters[i].style.opacity = 1;
+			}
+			buildWord();
+		}
+
+		// GENERATE RANDOM LETTER
+		let prevLetter = "";
+		function randomLetter() {
+			let pickLetter = false;
+			let newLetter = "";
+			let pickNewLetter = false;
+			while (pickLetter == false) {
+				while (pickNewLetter == false) {
+					newLetter = letterOptions[Math.floor(Math.random()*letterOptions.length)];
+					if (newLetter.toUpperCase() != prevLetter.toUpperCase()) {
+						pickNewLetter = true;
+						prevLetter = newLetter;
+					}
+				}
+				if (newLetter.toUpperCase() != currentLetter.toUpperCase()) {
+					letters[currentRound].innerText = newLetter.toUpperCase();
+					pickLetter = true;
+				} else {
+					pickNewLetter = false;
+				}
+			}
+		}
+
+		// GO THROUGH SUBROUND
+		function buildWord() {
+			if (buffer >= 2) {
+				gameEnd();
+			} else if (currentRound >= letters.length) {
+				let dirR = 1;
+				let dirX = 1;
+				let dirY = 1;
+				if (Math.random() < .5) {
+					dirR = -1;
+				}
+				if (Math.random() < .5) {
+					dirX = -1;
+				}
+				if (Math.random() < .5) {
+					dirY = -1;
+				}
+				currentTopicE.style.transform = `rotate(${Math.random()*10*dirR}deg) translate(${(Math.random()*5*dirX)+(25*dirX)}vw,${(Math.random()*25*dirY)}vh)`;
+				currentTopicE.classList.add("game-word-faded");
+				round++;
+				synth3.triggerAttackRelease("G4", "16n");
+				setTimeout(function() {
+					generateWord();
+				}, 500);
+			} else if (currentLetter == "") {
+				currentRound++;
+				subRound = 0;
+				currentLetter = letters[currentRound].innerText;
+				buildWord();
+			} else if (subRound == 0) {
+				timer.innerText = "WAIT";
+				letters[currentRound].style = scale(1);
+				currentLetter = letters[currentRound].innerText;
+				synth2.triggerAttackRelease("B2", "8n");
+				randomLetter();
+				subRound++;
+				buildWord();
+			} else if (subRound > 0 && subRound < roundLength) {
+				timer.innerText = "WAIT";
+				setTimeout(function() {
+					synth2.triggerAttackRelease("B2", "8n");
+					randomLetter();
+					subRound++;
+					buildWord();
+					if (smiling == true) {
+						buffer += 3;
+					}
+				}, 500)
+			} else if (subRound >= roundLength) {
+				letters[currentRound].innerText = currentLetter.toUpperCase();
+				letters[currentRound].style.color = "var(--primary)";
+				timer.innerText = "SMILE!";
+				let checkLoop = 0;
+				let checkSmile = setInterval(function() {
+					if (smiling) {
+						clearInterval(checkSmile);
+						synth2.triggerAttackRelease("G4", "8n");
+						smileScore++;
+						score.innerText = smileScore;
+						let dirX = 1;
+						let dirY = 1;
+						if (Math.random() < .5) {
+							dirX = -1;
+						}
+						if (Math.random() < .5) {
+							dirY = -1;
+						}
+						roundLength = Math.round(Math.random()*3+4);
+						currentRound++;
+						subRound = 0;
+						if (currentRound != letters.length) {
+							currentLetter = letters[currentRound].innerText;
+						}
+						setTimeout(function() {
+							buildWord();
+						}, 500);
+					} else if (checkLoop == 15) {
+						clearInterval(checkSmile);
+						gameEnd();
+					}
+					checkLoop += 1;
+				}, 100);
+			}
+		}
+
+		// GAME END SCREEN
+		function gameEnd() {
+			synth1.triggerAttackRelease("C5", "4n");
+			currentTopicE.style.transform = "scale(0)";
+			smile.style.transform = "scale(0)";
+			interface.style.transform = "scale(0)";
+			gameEndContainer.style.transform = "scale(1)";
+			gameEndScore.innerText = smileScore;
+			gameEndWreck.innerText = round;
+			if (round == 1) {
+				gameEndWreckS.innerText = "y";
+			} else {
+				gameEndWreckS.innerText = "ies";
+			}
+			if (parseInt(getCookie("write-highscore")) < smileScore) {
+				setCookie("write-highscore", smileScore, 30);
+				gameEndRecord.style.display = "block";
+			} else {
+				gameEndRecord.style.display = "none";
+			}
+		}
+		
+		// FACE DETECTION FUNCTIONS
+		let loading = document.querySelector(".game-info-start");
+		let videoContainer = document.querySelector(".video-container"); 
+		let faceapi;
+		let detections = [];
+		let video;
+
+		function setup() {
+			// Create canvas
+			let canv = createCanvas(1280, 720);
+			canv.id("canvas");
+			let originParent = canv.parent(); 
+			canv.parent(videoContainer);
+			originParent.remove();
+			// Create video
+			video = createCapture(VIDEO);
+			video.parent(videoContainer);
+			video.hide;
+			video.id("video");
+			video.size(1280, 720);
+
+			const faceOptions = {
+				withLandmarks: true,
+				withDescriptors: true,
+				minConfidence: 0.5
+			};
+
+			// Initialize the model
+			faceapi = ml5.faceApi(video, faceOptions, faceReady);
+		}
+
+		function faceReady() {
+			faceapi.detect(gotFaces); // Start detecting faces
+		}
+
+		// Got faces
+		let initialize = false;
+		function gotFaces(error, result) {
+			if (error) {
+				console.log(error);
+				return;
+			}
+			if (initialize == false) {
+				loading.innerText = "Click here to begin";
+				loading.classList.remove("game-info-wait");
+				initialize = true;
+			}
+			detections = result; // All the data
+			detectSmile(detections); // Draw face expression
+			faceapi.detect(gotFaces); // Call the function again at here
+		}
+
+		function detectSmile(detections) {
+			if (detections.length > 0) { // If at least 1 face is detected
+				if (end == false) {
+					for (i=0; i<detections.length; i++) {
+						let { neutral, happy, angry, sad, disgusted, surprised, fearful } = detections[i].expressions;
+						if (happy < .2) {
+							smile.classList.remove("game-smile-active");
+							smileMouth.style.transform = "scaleY(-1)";
+							smiling = false;
+						} else if (happy > .2) {
+							smile.classList.add("game-smile-active");
+							smileMouth.style.transform = "scaleY(1)";
+							smiling = true;
+						}
+					}
+				}
+			} else { // If no faces are detected
+			}
+		}
+
+		// COOKIE FUNCTIONS
+		function setCookie(cname, cvalue, exdays) {
+			const d = new Date();
+			d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+			let expires = "expires="+d.toUTCString();
+			document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+		}
+		function getCookie(cname) {
+			let name = cname + "=";
+			let ca = document.cookie.split(';');
+			for(let i = 0; i < ca.length; i++) {
+				let c = ca[i];
+				while (c.charAt(0) == ' ') {
+					c = c.substring(1);
+				}
+				if (c.indexOf(name) == 0) {
+					return c.substring(name.length, c.length);
+				}
+			}
+			return "";
+		}
+
+		// RETURN TO HOMEPAGE
+		let gameIntro = document.querySelector(".game-intro");
+		function backHome() {
+			gameIntro.style.transform = "translateX(110%)";
+			setTimeout(() => {
+				window.location.href = "../";
+			}, 1000);
+		}
+		function backHomeEnd() {
+			gameTopic.style.opacity = "0";
+			gameEndContainer.style.opacity = "0";
+			setTimeout(() => {
+				window.location.href = "../";
+			}, 3000);
+		}
+
+		// SOUND EFFECTS
+		let vol = new Tone.Volume(-3);
+		let synth1 = new Tone.PolySynth();
+		synth1.set({
+			oscillator: {
+				type: "sawtooth12"
+			},
+			envelope: {
+				attack: 0.15,
+				release: .5,
+			}
+		});
+		synth1.chain(vol, Tone.Destination);
+
+		let synth2 = new Tone.PolySynth();
+		synth2.set({
+			oscillator: {
+				type: "fatsine"
+			},
+			envelope: {
+				attack: 0.05,
+				decay: 5,
+				sustain: 0.2,
+				release: 1.5
+			}
+		});
+		synth2.chain(vol, Tone.Destination);
+
+		let synth3 = new Tone.PolySynth();
+		synth3.set({
+			oscillator: {
+				type: "amtriangle"
+			},
+			envelope: {
+				attack: 0.05,
+				decay: 0.2,
+				sustain: 0.2,
+				release: 1.5
+			}
+		});
+		synth3.chain(vol, Tone.Destination);
+	</script>
+</body>
+</html>

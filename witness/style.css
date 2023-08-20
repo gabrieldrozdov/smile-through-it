@@ -1,0 +1,45 @@
+:root {
+	--smiley: black;
+}
+@font-face {
+	font-family: "Uncut";
+	src: url("assets/fonts/Uncut-Sans-Variable.ttf");
+}
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	font-family: 'Uncut', sans-serif;
+	text-align: center;
+	font-size: 100px;
+	line-height: 1em;
+}
+body {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100vw;
+	height: 100vh;
+	background-color: yellow;
+}
+.flex-container {
+	width: 100vw;
+	height: 100vh;
+	position: fixed;
+	top: 0;
+	left: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.flex-container svg {
+	height: 80vh;
+	fill-rule:evenodd;clip-rule:evenodd;
+}
+#smiley {
+	transition: .5s;
+	transform-origin: 50% 70%;
+}
+video {
+	display: none;
+}
