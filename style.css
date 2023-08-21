@@ -60,7 +60,7 @@ a:hover {
 .game-intro {
 	display: grid;
 	width: 100vw;
-	height: 100vh;
+	height: 100dvh;
 	grid-template-columns: 50px 1fr 1fr;
 	background-color: var(--primary);
 	transition: transform 1s;
@@ -107,7 +107,7 @@ a:hover {
 		transform: translateY(0) rotateZ(-90deg);
 	}
 	to {
-		transform: translateY(300vh) rotateZ(-90deg);
+		transform: translateY(300dvh) rotateZ(-90deg);
 	}
 }
 .return p {
@@ -184,7 +184,7 @@ a:hover {
 .game-info {
 	background: var(--black);
 	color: var(--primary);
-	height: 100vh;
+	height: 100dvh;
 	animation-name: game-info-in;
 	animation-duration: 1s;
 	transform: translateY(100%);
@@ -276,7 +276,7 @@ a:hover {
 
 .game-topics {
 	width: 100vw;
-	height: 100vh;
+	height: 100dvh;
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -285,7 +285,7 @@ a:hover {
 }
 .game-topic-container {
 	width: 100vw;
-	height: 100vh;
+	height: 100dvh;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -312,7 +312,7 @@ a:hover {
 }
 .game-ui {
 	width: 100vw;
-	height: 100vh;
+	height: 100dvh;
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -452,7 +452,7 @@ a:hover {
 }
 .game-transition div {
 	width: 100vw;
-	height: 100vh;
+	height: 100dvh;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -473,7 +473,7 @@ a:hover {
 }
 .game-end {
 	width: 100vw;
-	height: 100vh;
+	height: 100dvh;
 	top: 0;
 	left: 0;
 	position: absolute;
