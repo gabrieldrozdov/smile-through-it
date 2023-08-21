@@ -5,10 +5,11 @@
 	--yellow: #ffcc00;
 	--blue: #2EAFFF;
 	--red: #FF4A3D;
-	--lg: 48px;
-	--md: 36px;
-	--sm: 24px;
-	--xs: 12px;
+	--xl: 4vw;
+	--lg: 3vw;
+	--md: 2vw;
+	--sm: 1vw;
+	--xs: .5vw;
 }
 @font-face {
 	font-family: "Karrik";
@@ -48,13 +49,19 @@ a:hover {
 		font-size: 10px;
 	}
 }
+.container {
+	width: 100vw;
+	height: 100dvh;
+	overflow: hidden;
+	position: relative;
+}
 
 /* GAME INTRO SCREEN */
 .game-intro {
 	display: grid;
 	width: 100vw;
 	height: 100vh;
-	grid-template-columns: 0fr 1fr 1fr;
+	grid-template-columns: 50px 1fr 1fr;
 	background-color: var(--primary);
 	transition: transform 1s;
 	transition-timing-function: ease-in;
@@ -69,15 +76,15 @@ a:hover {
 }
 .return {
 	height: 100%;
+	width: 100%;
 	border: unset;
-	font-size: var(--sm);
+	font-size: 24px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	padding: 20px;
 	background-color: var(--white);
 	color: var(--black);
-	width: 2em;
 	text-decoration: none;
 	white-space: nowrap;
 	overflow: hidden;
@@ -125,7 +132,7 @@ a:hover {
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	font-size: 64px;
+	font-size: var(--xl);
 	font-weight: normal;
 	border-radius: 50%;
 	position: relative;
@@ -189,6 +196,8 @@ a:hover {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+	overflow-y: scroll;
+	gap: 40px;
 }
 .game-info-desc {
 	display: flex;
@@ -230,24 +239,34 @@ a:hover {
 	line-height: 1em;
 	font-size: var(--lg);
 	background-color: var(--black);
-	border: 10px solid var(--primary);
+	border: 10px solid var(--white);
 	padding: 25px 20px;
 	border-radius: 50%;
-	color: var(--primary);
+	color: var(--white);
 	cursor: pointer;
 	transition: transform .2s;
 }
 .game-info-start:hover {
-	background-color: var(--primary);
+	background-color: var(--white);
 	color: var(--black);
 	transform: scale(1.1);
 }
 .game-info-start:active {
 	transform: scale(.9);
 }
+@keyframes loading {
+	from {
+		transform: scale(1);
+	} to {
+		transform: scale(0.9);
+	}
+}
 .game-info-wait {
+	border: 10px solid var(--primary);
+	color: var(--primary);
 	opacity: .5;
 	pointer-events: none;
+	animation: loading 1s infinite alternate ease-in-out;
 }
 
 /* GAME VIDEO (for face detection) */
@@ -347,7 +366,7 @@ a:hover {
 	stroke: var(--white);
 }
 #smile-text {
-	font-size: var(--sm);
+	font-size: var(--md);
 	padding-top: 10px;
 	color: var(--primary);
 	text-align: center;
@@ -377,7 +396,7 @@ a:hover {
 	color: var(--black);
 	text-align: center;
 	padding: 5px 8px;
-	background-color: var(--primary);
+	background-color: var(--white);
 	line-height: 1em;
 	border-radius: 50px;
 }
@@ -385,14 +404,14 @@ a:hover {
 	padding: 5px 20px !important;
 }
 #game-score {
-	font-size: var(--sm);
+	font-size: var(--md);
 	color: var(--primary);
 	text-align: right;
 	width: 300px;
 	color: var(--white);
 }
 #game-highscore {
-	font-size: var(--sm);
+	font-size: var(--md);
 	color: var(--primary);
 	text-align: left;
 	width: 300px;
@@ -448,7 +467,7 @@ a:hover {
 	font-size: 2em;
 }
 #game-transition-3 {
-	font-size: 4em;
+	font-size: 3em;
 	color: var(--black);
 	-webkit-text-stroke: 2px var(--primary);
 }
@@ -509,4 +528,111 @@ a:hover {
 	transform: scale(1.2);
 	background-color: var(--primary);
 	color: var(--black);
+}
+
+/* Cookies notice */
+.cookies {
+	position: absolute;
+	bottom: 10px;
+	background-color: var(--red);
+	color: var(--black);
+	border-radius: 100px;
+	padding: 10px 20px;
+	align-items: center;
+	display: flex;
+	gap: 10px;
+	z-index: 99999;
+	font-size: 18px;
+	left: 50%;
+	transform: translateX(-50%);
+	cursor: pointer;
+	justify-content: center;
+}
+.cookies div {
+	background-color: var(--black);
+	border: unset;
+	color: var(--white);
+	border-radius: 100px;
+	font-size: 10px;
+	height: 20px;
+	width: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+}
+.cookies:hover {
+	background-color: var(--white);
+}
+.cookies:active {
+	opacity: .5;
+}
+
+/* Detections notice */
+.detections {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 500px;
+	height: 500px;
+	border-radius: 50%;
+	background-color: var(--red);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--black);
+	font-size: 40px;
+	text-align: center;
+	padding: 20px;
+	z-index: 999999;
+	pointer-events: none;
+}
+.detections[data-hide="1"] {
+	display: none;
+}
+
+/* Mobile styles */
+@media screen and (max-width: 800px) {
+	:root {
+		--lg: 7vw;
+		--md: 6vw;
+		--sm: 5vw;
+		--xs: 4vw;
+	}
+	.game-intro {
+		grid-template-columns: 40px 1fr;
+	}
+	.game-name {
+		display: none;
+	}
+	.game-info {
+		height: auto;
+		padding: 40px;
+	}
+	.game-interface {
+		align-items: center;
+		gap: 10px;
+		flex-direction: column;
+	}
+	.game-interface * {
+		align-self: center;
+		text-align: center !important;
+	}
+	.game-end {
+		padding: 20px;
+		font-size: var(--md);
+	}
+	.game-end-buttons {
+		flex-direction: column;
+		gap: 10px;
+	}
+	.cookies {
+		width: calc(100% - 20px);
+	}
+	.detections {
+		width: 300px;
+		height: 300px;
+		font-size: 24px;
+	}
 }

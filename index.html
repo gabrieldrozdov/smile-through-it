@@ -1,7 +1,3 @@
-<!-- 
-COOKIE WARNING
-TRIGGER WARNING MAYBE
--->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,7 +20,7 @@ TRIGGER WARNING MAYBE
 		:root {
 			--primary: var(--red);
 		}
-		.container {
+		.home-container {
 			width: 100vw;
 			height: 100dvh;
 			overflow-y: hidden;
@@ -51,7 +47,7 @@ TRIGGER WARNING MAYBE
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			height: 100px;
+			height: 80px;
 			width: 100%;
 		}
 		.logo-eye {
@@ -165,6 +161,7 @@ TRIGGER WARNING MAYBE
 			z-index: 1;
 			line-height: 1em;
 			cursor: pointer;
+			padding: 40px;
 		}
 		.choices button:hover {
 			transform: scale(1.2);
@@ -212,20 +209,23 @@ TRIGGER WARNING MAYBE
 			animation-name: choices-move;
 			animation-duration: 4.5s;
 			animation-timing-function: ease;
+			border-radius: 50%;
 		}
 		.choice-2-container {
 			animation-name: choices-move;
 			animation-duration: 4s;
 			animation-timing-function: ease;
+			border-radius: 50%;
 		}
 		.choice-3-container {
 			animation-name: choices-move;
 			animation-duration: 3.5s;
 			animation-timing-function: ease;
+			border-radius: 50%;
 		}
 		.choice-1 {
 			background: var(--orange);
-			border: 0px solid var(--orange);
+			border: 10px solid var(--orange);
 		}
 		.choice-1:hover {
 			color: var(--orange);
@@ -234,7 +234,7 @@ TRIGGER WARNING MAYBE
 		}
 		.choice-2 {
 			background: var(--yellow);
-			border: 0px solid var(--yellow);
+			border: 10px solid var(--yellow);
 		}
 		.choice-2:hover {
 			color: var(--yellow);
@@ -243,7 +243,7 @@ TRIGGER WARNING MAYBE
 		}
 		.choice-3 {
 			background: var(--blue);
-			border: 0px solid var(--blue);
+			border: 10px solid var(--blue);
 		}
 		.choice-3:hover {
 			color: var(--blue);
@@ -348,10 +348,10 @@ TRIGGER WARNING MAYBE
 
 		@keyframes about-move {
 			from {
-				transform: translate(20vw, -20vw);
+				transform: translate(200px, -200px);
 			}
 			to {
-				transform: translate(0vw, 0vw);
+				transform: translate(-25px, 25px);
 			}
 		}
 		.about-btn-container {
@@ -363,7 +363,7 @@ TRIGGER WARNING MAYBE
 			position: absolute;
 			top: 0;
 			right: 0;
-			transform: translate(20vw, -20vw);
+			transform: translate(200px, -200px);
 			transition: .2s;
 			z-index: 999;
 		}
@@ -379,7 +379,7 @@ TRIGGER WARNING MAYBE
 			align-items: center;
 			justify-content: center;
 			color: var(--black);
-			font-size: var(--sm);
+			font-size: 32px;
 			transform: rotate(-30deg) scale(.8);
 			cursor: pointer;
 			transition: .2s;
@@ -387,8 +387,8 @@ TRIGGER WARNING MAYBE
 		}
 		.about-btn:hover {
 			transform: rotate(0deg) scale(1);
-			top: 0px;
-			right: 0px;
+			top: -10px;
+			right: -10px;
 		}
 		.about-btn-hide {
 			transform: rotate(180deg) scale(0) !important;
@@ -440,18 +440,21 @@ TRIGGER WARNING MAYBE
 				grid-template-columns: 1fr;
 			}
 			.choices button {
-				font-size: var(--md);
-				aspect-ratio: 1/.8;
+				font-size: var(--lg);
 			}
 			.marquee {
 				opacity: 0 !important;
+			}
+			.about-btn {
+				height: 100px;
+				font-size: 18px;
 			}
 			.about-info {
 				top: 0;
 				left: 0;
 				display: none;
-				font-size: var(--sm);
-				padding: 80px 80px 80px 40px;
+				font-size: var(--md);
+				padding: 40px 40px 40px 20px;
 				overflow-y: auto;
 				height: auto;
 			}
@@ -463,7 +466,12 @@ TRIGGER WARNING MAYBE
 </head>
 
 <body>
-	<div class="container">
+	<div class="home-container">
+		<div class="cookies" onclick="setCookie('notice', 'true'); this.remove()">
+			<p>This site uses cookies to track your high scores.</p>
+			<div>OK</div>
+		</div>
+
 		<header class="logo-container">
 			<div class="logo">
 				<div class="logo-eye">
@@ -528,9 +536,10 @@ TRIGGER WARNING MAYBE
 			<p><span class="about-info-rev">What is this?</span> An arcade? Sort of. Maybe it’s a question: what is a game? Does it have to be joyful? Does it stop being a game if it’s not? Where do we draw that line?</p>
 			<p>This project started at the <a href="https://www.provlib.org/" target="_blank">Providence Public Library</a> during the Fall 2022 semester of RISD’s Graphic Design MFA program. At the library, I examined at a vintage <a href="https://en.wikipedia.org/wiki/Whist" target="_blank">Whist</a> game board dating back at least 100 years. I tried to understand the game’s rules from the board, but I couldn’t — there was insufficient data. Cards were missing, no branding was visible, and a “patent pending” label lacked any real identification. What I was looking at no longer had info or history. Instead, it had degraded into a graphic artifact.</p>
 			<p>This arcade was inspired by that Whist board. Through these three games, I ask you to draw a line between play and meaning, or at least to question where this connection gets made in your head.</p>
-			<p><span class="about-info-rev">What does this mean?</span> This project originated as the “Archive Arcade,” which I created during the Graduate Studio I course taught by Bethany Johns and Ramon Tejada. I think of the “archive” as our collective human memory. What are the things of the past that affect our lives today? How do our actions create the archive of memory and legacy for future generations?</p>
-			<p>The three games were then called “Wreck,” “Witness,” and ”Write” to reflect the role of your passive participation. I’ve changed the names to hopefully make things clearer outside of the context of that course.</p>
-			<p>I leave these questions for you to answer (or just think about). You are a witness, and you are a participant, I suppose.</p>
+			<p><span class="about-info-rev">What does this mean?</span> This project originated as the “Archive Arcade”, which I created during the Graduate Studio I course at RISD taught by Bethany Johns and Ramon Tejada. I think of the “archive” as our collective human memory. What are the things of the past that affect our lives today? How do our actions create the archive of memory and legacy for future generations?</p>
+			<p>The three games were then called “Wreck”, “Witness”, and ”Write” to reflect the role of our passive participation. The eyes that appear throughout the arcade reinforce this passive participation — we witness the terrors around us and smile through it. I’ve changed the name of each individual game to hopefully make this message clearer outside of the context of that course.</p>
+			<p>I leave any remaining questions for you to answer (or just think about). You are a witness, and you are a participant, I suppose.</p>
+			<p><span class="about-info-rev">Cookies Notice</span> This website uses cookies to track your high scores. No other information is stored via cookies.</p>
 		</div>
 	</div>
 
@@ -575,6 +584,32 @@ TRIGGER WARNING MAYBE
 				window.location.reload() 
 			}
 		};
+
+		// Detect cookies notice
+		function setCookie(cname, cvalue, exdays) {
+			const d = new Date();
+			d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+			let expires = "expires="+d.toUTCString();
+			document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+		}
+		function getCookie(cname) {
+			let name = cname + "=";
+			let ca = document.cookie.split(';');
+			for(let i = 0; i < ca.length; i++) {
+				let c = ca[i];
+				while (c.charAt(0) == ' ') {
+					c = c.substring(1);
+				}
+				if (c.indexOf(name) == 0) {
+					return c.substring(name.length, c.length);
+				}
+			}
+			return "";
+		}
+		if (getCookie("notice") == "true") {
+			let cookieNotice = document.querySelector(".cookies");
+			cookieNotice.remove();
+		}
 	</script>
 </body>
 </html>

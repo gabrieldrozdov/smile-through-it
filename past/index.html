@@ -28,73 +28,82 @@
 	<script src="../assets/Tone.js"></script>
 </head>
 <body>
-	<div class="game-intro">
-		<button class="return" onclick="backHome()">
-			<p>RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ </p>
-		</button>
-		<h1 class="game-name">
-			<span class="game-name-line-2">Past</span>
-			<span class="game-name-line-1">Past</span>
-			<span class="game-name-line-0">Past</span>
-			<span class="game-name-line-1">Past</span>
-			<span class="game-name-line-2">Past</span>
-		</h1>
-		<div class="game-info">
-			<div class="game-info-desc">
-				<img src="../assets/branding/eyes.svg" class="game-info-eyes">
-				<p class="game-info-highlight">Smile into the past.</p>
-				<p>Smile as many times as you can in one minute! Try to get a new high score! <span class="game-info-outline">No matter what you see, keep smiling.</span></p>
-				<p>Easy enough?</p>
-			</div>
-			<button class="game-info-start game-info-wait" onclick="startGame()">Loading...</button>
+	<div class="container">
+		<div class="cookies" onclick="setCookie('notice', 'true'); this.remove()">
+			<p>This site uses cookies to track your high scores.</p>
+			<div>OK</div>
 		</div>
-	</div>
-	<div class="game-transition">
-		<div id="game-transition-1">Ready?</div>
-		<div id="game-transition-2">Set?</div>
-		<div id="game-transition-3">Smile!</div>
-	</div>
-	<div class="game-container">
-		<div class="game-ui">
-			<div class="game-smile-container">
-				<div class="game-smile">
-					<svg version="1.1" x="0px" y="0px" viewBox="0 0 145.7 145.7"
-					style="enable-background:new 0 0 145.7 145.7;">
-						<g>
-							<circle class="smile-head" cx="72.8" cy="72.8" r="67.8"/>
-							<path class="smile-mouth" d="M103.2,76.6c0,16.8-13.6,30.3-30.3,30.3S42.6,93.4,42.6,76.6"/>
-							<g class="smile-eyes">
-								<circle cx="53.2" cy="45.3" r="8.1"/>
-								<circle cx="92.4" cy="45.3" r="8.1"/>
-							</g>
-						</g>
-					</svg>
+
+		<div class="detections" data-hide="1">No faces detected!</div>
+
+		<div class="game-intro">
+			<button class="return" onclick="backHome()">
+				<p>RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ </p>
+			</button>
+			<h1 class="game-name">
+				<span class="game-name-line-2">Past</span>
+				<span class="game-name-line-1">Past</span>
+				<span class="game-name-line-0">Past</span>
+				<span class="game-name-line-1">Past</span>
+				<span class="game-name-line-2">Past</span>
+			</h1>
+			<div class="game-info">
+				<div class="game-info-desc">
+					<img src="../assets/branding/eyes.svg" class="game-info-eyes">
+					<p class="game-info-highlight">Smile through the past.</p>
+					<p>Smile as many times as you can in one minute! <span class="game-info-outline">The game ends when the timer runs out.</span></p>
+					<p>Easy enough?</p>
 				</div>
-				<p id="smile-text">Smile!</p>
+				<button class="game-info-start game-info-wait" onclick="startGame()">Loading...</button>
 			</div>
-			<div class="game-interface-container"><div class="game-interface">
-				<div id="game-score">Score: <span>0</span></div>
-				<div id="game-timer">00.00</div>
-				<div id="game-highscore">Record: <span>0</span></div>
-			</div></div>
 		</div>
-		<div class="game-topics"></div>
-	</div>
-	<div class="game-end">
-		<div id="game-end-1">Congrats!<br>You smiled <span></span> times.</div>
-		<div id="game-end-2">That means you smiled through the wreckage of <span id="rights"></span> human&nbsp;right<span id="rights-s">s</span>.</div>
-		<div id="game-end-3">You set a new record!</div>
-		<div class="game-end-buttons">
-			<button id="game-end-restart" onclick="startGame()">Play again?</button>
-			<button id="game-end-home" onclick="backHomeEnd()">Go back home</button>
+		<div class="game-transition">
+			<div id="game-transition-1">Ready?</div>
+			<div id="game-transition-2">Set?</div>
+			<div id="game-transition-3">Smile!</div>
 		</div>
+		<div class="game-container">
+			<div class="game-ui">
+				<div class="game-smile-container">
+					<div class="game-smile">
+						<svg version="1.1" x="0px" y="0px" viewBox="0 0 145.7 145.7"
+						style="enable-background:new 0 0 145.7 145.7;">
+							<g>
+								<circle class="smile-head" cx="72.8" cy="72.8" r="67.8"/>
+								<path class="smile-mouth" d="M103.2,76.6c0,16.8-13.6,30.3-30.3,30.3S42.6,93.4,42.6,76.6"/>
+								<g class="smile-eyes">
+									<circle cx="53.2" cy="45.3" r="8.1"/>
+									<circle cx="92.4" cy="45.3" r="8.1"/>
+								</g>
+							</g>
+						</svg>
+					</div>
+					<p id="smile-text">Smile!</p>
+				</div>
+				<div class="game-interface-container"><div class="game-interface">
+					<div id="game-score">Score: <span>0</span></div>
+					<div id="game-timer">00.00</div>
+					<div id="game-highscore">Record: <span>0</span></div>
+				</div></div>
+			</div>
+			<div class="game-topics"></div>
+		</div>
+		<div class="game-end">
+			<div id="game-end-1">Game over!<br>You smiled <span></span> times.</div>
+			<div id="game-end-2">That means you smiled through the erasure of <span id="rights"></span> human&nbsp;right<span id="rights-s">s</span>.</div>
+			<div id="game-end-3">You set a new record!</div>
+			<div class="game-end-buttons">
+				<button id="game-end-restart" onclick="startGame()">Play again?</button>
+				<button id="game-end-home" onclick="backHomeEnd()">Go back home</button>
+			</div>
+		</div>
+		<div class="video-container"></div>
 	</div>
-	<div class="video-container"></div>
 
 	<script>
 		if (getCookie("wreck-highscore") == "") {
 				setCookie("wreck-highscore", 50, 30);
-		} 
+		}
 		let order = [];
 		let smileScore = 0;
 		let end = true;
@@ -116,7 +125,11 @@
 		let gameEndWreck = document.querySelector("#game-end-2 #rights");
 		let gameEndWreckS = document.querySelector("#game-end-2 #rights-s");
 		let gameEndRecord = document.querySelector("#game-end-3");
+		let gameEndRestart = document.querySelector('#game-end-restart');
+		let gameEndHome = document.querySelector('#game-end-home');
 		function startGame() {
+			loading.style.pointerEvents = 'none';
+			gameEndRestart.style.pointerEvents = 'none';
 			order = [];
 			smileScore = 0;
 			end = true;
@@ -163,6 +176,8 @@
 							smileText.style.transform = "scale(1)";
 							generateWord();
 							gameTimer();
+							loading.style.pointerEvents = 'unset';
+							gameEndRestart.style.pointerEvents = 'unset';
 						}, 1500);
 					}, 1500);
 				}, 1500);
@@ -170,36 +185,42 @@
 		}
 
 		let topics = [
-			"Women’s Rights",
-			"Separation Of Church And State",
-			"Freedom Of Speech And Press",
+			"The Right to Abortion",
+			"Women’s Bodily Autonomy",
+			"Separation of Church and State",
+			"Secular Education",
+			"Freedom of Speech and Press",
 			"The Middle Class",
 			"Affordable Healthcare",
 			"Mental Health",
 			"Democratic Governments",
 			"Affordable Housing",
-			"Dependable Police Forces",
+			"Justice",
+			"Civil Rights",
+			"Trustworthy Police",
 			"Temperate Climates",
 			"Economic Stability",
+			"Low Inflation",
 			"Impartial Supreme Court Justices",
-			"Healthy Market Competition",
-			"High Taxes For The Upper Class",
+			"Free Markets without Monopolies",
+			"High Taxes for the Upper Class",
 			"Pandemic Assistance",
 			"Labor Unions",
-			"Local Community",
+			"Local Communities",
 			"Political Decorum",
-			"Livable Minimum Wage",
-			"World Peace",
+			"Livable Minimum Wages",
+			"Peace",
 			"Accountable Politicians",
-			"Globalism",
 			"International Cultural Exchange",
-			"Right To Privacy",
-			"Resources For The Elderly",
+			"The Right to Privacy",
+			"Resources for the Elderly",
 			"Clean Water",
-			"Access To Education",
+			"Cold Winters",
+			"Bearable Summer Heat",
+			"Access to Education",
 			"Long-term Job Security",
 			"Income Equality",
-			"Infrastructure"
+			"Dependable Infrastructure"
 		]
 		let gameTopic = document.querySelector(".game-topics");
 		let round = 0;
@@ -300,7 +321,7 @@
 		
 		// FACE DETECTION FUNCTIONS
 		let loading = document.querySelector(".game-info-start");
-		let videoContainer = document.querySelector(".video-container"); 
+		let videoContainer = document.querySelector(".video-container");
 		let faceapi;
 		let detections = [];
 		let video;
@@ -350,31 +371,49 @@
 			faceapi.detect(gotFaces); // Call the function again at here
 		}
 
+		let detectionsMsg = document.querySelector('.detections');
+		let detectionsMsgSetting = 0;
 		function detectSmile(detections) {
-			if (detections.length > 0) { // If at least 1 face is detected
-				if (end == false) {
-					for (i=0; i<detections.length; i++) {
-						let { neutral, happy, angry, sad, disgusted, surprised, fearful } = detections[i].expressions;
-						if (happy < .4 && smiling == true) {
-							smile.classList.remove("game-smile-active");
-							smileMouth.style.transform = "scaleY(-1)";
-							smileText.innerText = "SMILE!";
-							smileText.style.color = "var(--primary)";
-							smiling = false;
-							synth2.triggerAttackRelease("B2", "8n");
-						} else if (happy > .6 && smiling == false && smileDelay == false) {
-							smile.classList.add("game-smile-active");
-							smileMouth.style.transform = "scaleY(1)";
-							smileText.innerText = "STOP SMILING!";
-							smileText.style.color = "var(--white)";
-							smiling = true;
-							smileScore++;
-							synth2.triggerAttackRelease("G4", "8n");
-							breakWord();
-						}
+			if (end == false) {
+				if (detections.length == 1) { // If at least 1 face is detected
+					if (detectionsMsgSetting != 0) {
+						detectionsMsg.innerText = "";
+						detectionsMsg.dataset.hide = 1;
+						detectionsMsgSetting = 0;
+					}
+					let { neutral, happy, angry, sad, disgusted, surprised, fearful } = detections[0].expressions;
+					if (happy < .4 && smiling == true) {
+						smile.classList.remove("game-smile-active");
+						smileMouth.style.transform = "scaleY(-1)";
+						smileText.innerText = "SMILE!";
+						smileText.style.color = "var(--primary)";
+						smiling = false;
+						synth2.triggerAttackRelease("B2", "8n");
+					} else if (happy > .6 && smiling == false && smileDelay == false) {
+						smile.classList.add("game-smile-active");
+						smileMouth.style.transform = "scaleY(1)";
+						smileText.innerText = "STOP SMILING!";
+						smileText.style.color = "var(--white)";
+						smiling = true;
+						smileScore++;
+						synth2.triggerAttackRelease("G4", "8n");
+						breakWord();
+					}
+				} else if (detections.length > 1) { // If multiple faces detected
+					if (detectionsMsgSetting != 1) {
+						detectionsMsg.innerText = "Multiple faces detected! Only one person can play at a time.";
+						detectionsMsg.dataset.hide = 0;
+						detectionsMsgSetting = 1;
+					}
+				} else { // If no faces are detected
+					if (detectionsMsgSetting != 2) {
+						detectionsMsg.innerText = "No face detected! Please make sure your camera is active and unblocked.";
+						detectionsMsg.dataset.hide = 0;
+						detectionsMsgSetting = 2;
 					}
 				}
-			} else { // If no faces are detected
+			} else {
+				detectionsMsg.dataset.hide = 1;
 			}
 		}
 
@@ -409,6 +448,7 @@
 			}, 1000);
 		}
 		function backHomeEnd() {
+			gameEndHome.style.pointerEvents = 'none';
 			gameTopic.style.opacity = "0";
 			gameEndContainer.style.opacity = "0";
 			setTimeout(() => {
@@ -457,6 +497,12 @@
 			}
 		});
 		synth3.chain(vol, Tone.Destination);
+
+		// Detect cookies notice
+		if (getCookie("notice") == "true") {
+			let cookieNotice = document.querySelector(".cookies");
+			cookieNotice.remove();
+		}
 	</script>
 </body>
 </html>
