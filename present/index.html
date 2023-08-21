@@ -383,7 +383,9 @@
 			}
 			detections = result; // All the data
 			detectSmile(detections); // Draw face expression
-			faceapi.detect(gotFaces); // Call the function again at here
+			setTimeout(() => { // Delayed to minimize lag
+				faceapi.detect(gotFaces); // Call the function again at here
+			}, 200)
 		}
 
 		let smileDelay = false;
