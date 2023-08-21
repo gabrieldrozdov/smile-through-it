@@ -8,7 +8,16 @@ TRIGGER WARNING MAYBE
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>ARCHIVE ARCADE</title>
+	<title>Smile Through It</title>
+
+	<meta name="author" content="Gabriel Drozdov">
+	<meta name="keywords" content="HTML, CSS, JavaScript, Video Game, Face Detection, Creative Coding">
+	<meta name="description" content="Smile to win, win to smile.">
+	<meta property="og:url" content="https://smilethroughit.noreplica.com/">
+	<meta name="og:title" property="og:title" content="Smile Through It">
+	<meta property="og:description" content="Smile to win, win to smile.">
+	<meta property="og:image" content="./assets/branding/opengraph.png">
+
 	<link rel="stylesheet" href="style.css">
 	<link rel="icon" href="assets/favicon/favicon-red.png">
 	<style>
@@ -16,7 +25,8 @@ TRIGGER WARNING MAYBE
 			--primary: var(--red);
 		}
 		.container {
-			height: 100vh;
+			width: 100vw;
+			height: 100dvh;
 			overflow-y: hidden;
 			overflow-x: hidden;
 			position: relative;
@@ -25,7 +35,7 @@ TRIGGER WARNING MAYBE
 		/* LOGO */
 		.logo-container {
 			width: 100vw;
-			height: 100vh;
+			height: 100dvh;
 			display: flex;
 			align-items: center;
 			justify-content: center;
@@ -34,32 +44,39 @@ TRIGGER WARNING MAYBE
 			animation-duration: 1s;
 			animation-timing-function: ease-in-out;
 			animation-fill-mode: forwards;
+			z-index: -1;
+			pointer-events: none;
 		}
 		.logo {
-			display: grid;
-			grid-template-columns: 1fr 1fr;
-			max-width: 600px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			height: 100px;
 			width: 100%;
-			font-size: 1rem;
 		}
-		.logo div {
+		.logo-eye {
 			position: relative;
 			display: flex;
 			align-items: center;
 			justify-content: center;
+			height: 100%;
 		}
 		.logo img {
-			position: absolute;
-			z-index: -1;
+			height: 100%;
 			animation: 3s ease reverse logo-intro, 7s 3s ease infinite logo-blink;
 		}
-		.logo h1 {
-			top: 0;
+		.logo-pupil {
+			position: absolute;
+			top: 50%;
 			left: 50%;
-			color: var(--black);
 			text-transform: uppercase;
 			text-align: center;
-			font-size: var(--md);
+			height: 120%;
+			aspect-ratio: 1/1;
+			transform: translate(-50%, -50%);
+			z-index: 9;
+			background-color: var(--black);
+			border-radius: 50%;
 		}
 		@keyframes logo-intro {
 			0% {
@@ -92,10 +109,10 @@ TRIGGER WARNING MAYBE
 		}
 		@keyframes logo-move {
 			from {
-				height: 100vh;
+				height: 100dvh;
 			}
 			to {
-				height: 20vh;
+				height: 20dvh;
 			}
 		}
 		@keyframes logo-blink {
@@ -117,15 +134,22 @@ TRIGGER WARNING MAYBE
 		.choices {
 			display: grid;
 			grid-template-columns: 1fr 1fr 1fr;
-			height: 80vh;
-			padding-bottom: 20vh;
+			height: 80dvh;
+			padding-bottom: 20dvh;
 			width: 100vw;
 			position: absolute;
-			top: 20vh;
+			top: 20dvh;
 			gap: 10px;
 			z-index: 9;
 		}
+		.choices > div {
+			width: 100%;
+			height: 100%;
+			transform: scale(1.1);
+		}
 		.choices button {
+			width: 100%;
+			height: 100%;
 			text-decoration: none;
 			text-align: center;
 			text-transform: uppercase;
@@ -137,7 +161,6 @@ TRIGGER WARNING MAYBE
 			font-size: var(--lg);
 			transition: border .2s, border-radius .2s, transform .2s;
 			border-radius: 50%;
-			transform: scale(1.1);
 			position: relative;
 			z-index: 1;
 			line-height: 1em;
@@ -182,15 +205,27 @@ TRIGGER WARNING MAYBE
 				transform: translateX(-100vw) scale(.5);
 			}
 			100% {
-				transform: translateX(0vh) scale(1.1);
+				transform: translateX(0dvh) scale(1.1);
 			}
+		}
+		.choice-1-container {
+			animation-name: choices-move;
+			animation-duration: 4.5s;
+			animation-timing-function: ease;
+		}
+		.choice-2-container {
+			animation-name: choices-move;
+			animation-duration: 4s;
+			animation-timing-function: ease;
+		}
+		.choice-3-container {
+			animation-name: choices-move;
+			animation-duration: 3.5s;
+			animation-timing-function: ease;
 		}
 		.choice-1 {
 			background: var(--orange);
 			border: 0px solid var(--orange);
-			animation-name: choices-move;
-			animation-duration: 4.5s;
-			animation-timing-function: ease;
 		}
 		.choice-1:hover {
 			color: var(--orange);
@@ -200,9 +235,6 @@ TRIGGER WARNING MAYBE
 		.choice-2 {
 			background: var(--yellow);
 			border: 0px solid var(--yellow);
-			animation-name: choices-move;
-			animation-duration: 4s;
-			animation-timing-function: ease;
 		}
 		.choice-2:hover {
 			color: var(--yellow);
@@ -212,9 +244,6 @@ TRIGGER WARNING MAYBE
 		.choice-3 {
 			background: var(--blue);
 			border: 0px solid var(--blue);
-			animation-name: choices-move;
-			animation-duration: 3.5s;
-			animation-timing-function: ease;
 		}
 		.choice-3:hover {
 			color: var(--blue);
@@ -280,35 +309,39 @@ TRIGGER WARNING MAYBE
 		}
 		@keyframes marquee-move {
 			from {
-				bottom: -30vh;
+				bottom: -60dvh;
 			}
 			to {
-				bottom: 0vh;
+				bottom: -32dvh;
 			}
 		}
 		.marquee {
 			position: absolute;
-			bottom: -30vh;
+			bottom: -60dvh;
 			display: flex;
 			align-items: center;
 			justify-content: center;
 			white-space: nowrap;
 			animation: linear 180s infinite alternate marquee, 1s ease forwards 2.5s marquee-move;
 			opacity: .15;
-			font-size: 128px;
 			pointer-events: none;
-			color: var(--black);
+			color: transparent;
 			-webkit-text-stroke: 2px var(--white);
+			z-index: -1;
 		}
-		.choice-1:hover ~ .marquee {
+		.marquee h1 {
+			font-weight: normal;
+			font-size: 128px;
+		}
+		.choice-1-container:hover ~ .marquee {
 			opacity: 1;
 			-webkit-text-stroke: 2px var(--orange);
 		}
-		.choice-2:hover ~ .marquee {
+		.choice-2-container:hover ~ .marquee {
 			opacity: 1;
 			-webkit-text-stroke: 2px var(--yellow);
 		}
-		.choice-3:hover ~ .marquee {
+		.choice-3-container:hover ~ .marquee {
 			opacity: 1;
 			-webkit-text-stroke: 2px var(--blue);
 		}
@@ -365,7 +398,7 @@ TRIGGER WARNING MAYBE
 		}
 		.about-info {
 			position: absolute;
-			top: 105vh;
+			top: 105dvh;
 			font-size: var(--lg);
 			line-height: 1.2em;
 			transition: top 1s;
@@ -374,7 +407,7 @@ TRIGGER WARNING MAYBE
 			color: var(--white);
 			padding: 80px;
 			overflow-y: scroll;
-			height: 100vh;
+			height: 100dvh;
 			width: 100%;
 			display: flex;
 			flex-direction: column;
@@ -398,10 +431,10 @@ TRIGGER WARNING MAYBE
 		/* MOBILE STYLES */
 		@media screen and (max-width: 800px) {
 			.container {
-				overflow-y: auto;
+				overflow-y: scroll;
 			}
-			.logo h1 {
-				font-size: var(--sm);
+			.logo {
+				height: 50px;
 			}
 			.choices {
 				grid-template-columns: 1fr;
@@ -433,45 +466,51 @@ TRIGGER WARNING MAYBE
 	<div class="container">
 		<header class="logo-container">
 			<div class="logo">
-				<div>
+				<div class="logo-eye">
 					<img src="assets/branding/eye.svg">
-					<h1>Archive</h1>
+					<div class="logo-pupil"></div>
 				</div>
-				<div>
+				<div class="logo-eye">
 					<img src="assets/branding/eye.svg">
-					<h1>Arcade</h1>
+					<div class="logo-pupil"></div>
 				</div>
 			</div>
 		</header>
 
 		<main class="choices">
-			<button class="choice-1" onclick="transition(this, 'wreck', 1)">
-				<span class="choice-line-2" style="color:var(--yellow);">Wreck</span>
-				<span class="choice-line-1" style="color:var(--blue);">Wreck</span>
-				<span class="choice-line-0">Wreck</span>
-				<span class="choice-line-1" style="color:var(--blue);">Wreck</span>
-				<span class="choice-line-2" style="color:var(--yellow);">Wreck</span>
-				<div class="transition transition-1"></div>
-			</button>
-			<button class="choice-2" onclick="transition(this, 'witness', 2)">
-				<span class="choice-line-2" style="color:var(--blue);">Witness</span>
-				<span class="choice-line-1" style="color:var(--orange);">Witness</span>
-				<span class="choice-line-0">Witness</span>
-				<span class="choice-line-1" style="color:var(--orange);">Witness</span>
-				<span class="choice-line-2" style="color:var(--blue);">Witness</span>
-				<div class="transition transition-2"></div>
-			</button>
-			<button class="choice-3" onclick="transition(this, 'write', 3)">
-				<span class="choice-line-2" style="color:var(--orange);">Write</span>
-				<span class="choice-line-1" style="color:var(--yellow);">Write</span>
-				<span class="choice-line-0">Write</span>
-				<span class="choice-line-1" style="color:var(--yellow);">Write</span>
-				<span class="choice-line-2" style="color:var(--orange);">Write</span>
-				<div class="transition transition-3"></div>
-			</button>
+			<div class="choice-1-container">
+				<button class="choice-1" onclick="transition(this, 'past', 1)">
+					<span class="choice-line-2" style="color:var(--yellow);">Past</span>
+					<span class="choice-line-1" style="color:var(--blue);">Past</span>
+					<span class="choice-line-0">Past</span>
+					<span class="choice-line-1" style="color:var(--blue);">Past</span>
+					<span class="choice-line-2" style="color:var(--yellow);">Past</span>
+					<div class="transition transition-1"></div>
+				</button>
+			</div>
+			<div class="choice-2-container">
+				<button class="choice-2" onclick="transition(this, 'present', 2)">
+					<span class="choice-line-2" style="color:var(--blue);">Present</span>
+					<span class="choice-line-1" style="color:var(--orange);">Present</span>
+					<span class="choice-line-0">Present</span>
+					<span class="choice-line-1" style="color:var(--orange);">Present</span>
+					<span class="choice-line-2" style="color:var(--blue);">Present</span>
+					<div class="transition transition-2"></div>
+				</button>
+			</div>
+			<div class="choice-3-container">
+				<button class="choice-3" onclick="transition(this, 'future', 3)">
+					<span class="choice-line-2" style="color:var(--orange);">Future</span>
+					<span class="choice-line-1" style="color:var(--yellow);">Future</span>
+					<span class="choice-line-0">Future</span>
+					<span class="choice-line-1" style="color:var(--yellow);">Future</span>
+					<span class="choice-line-2" style="color:var(--orange);">Future</span>
+					<div class="transition transition-3"></div>
+				</button>
+			</div>
 
 			<div class="marquee">
-				<p>PICK A GAME ↑ PICK A GAME ↑ PICK A GAME ↑ PICK A GAME ↑ PICK A GAME ↑ PICK A GAME ↑ PICK A GAME ↑ PICK A GAME</p>
+				<h1>SMILE THROUGH IT ↑ SMILE THROUGH IT ↑ SMILE THROUGH IT ↑ SMILE THROUGH IT ↑ SMILE THROUGH IT ↑ SMILE THROUGH IT ↑ SMILE THROUGH IT ↑ SMILE THROUGH IT</h1>
 			</div>
 		</main>
 
@@ -487,9 +526,10 @@ TRIGGER WARNING MAYBE
 			<p><span class="about-info-rev">Design + Code:</span> <a href="https://www.gabrieldrozdov.com/" target="_blank">Gabriel&nbsp;Drozdov</a>.</p>
 			<p><span class="about-info-rev">Colophon:</span> <em>Karrik</em> by Jean-Baptiste Morizot and Lucas Le Bihan, published by <a href="https://velvetyne.fr/fonts/karrik/" target="_blank">Velvetyne</a>.</p>
 			<p><span class="about-info-rev">What is this?</span> An arcade? Sort of. Maybe it’s a question: what is a game? Does it have to be joyful? Does it stop being a game if it’s not? Where do we draw that line?</p>
-			<p>This project started at the <a href="https://www.provlib.org/" target="_blank">Providence Public Library</a> during the Fall 2022 semester of RISD’s Graphic Design MFA program. This project began by looking at a vintage <a href="https://en.wikipedia.org/wiki/Whist" target="_blank">Whist</a> game board dating back at least 100 years. I tried to understand the game’s rules from the board, but this proved to be impossible — insufficient data. Cards were missing, no branding was visible, and a “patent pending” label lacked any real identification. What I was looking at no longer had info or history. Instead, it had degraded into a graphic artifact.</p>
+			<p>This project started at the <a href="https://www.provlib.org/" target="_blank">Providence Public Library</a> during the Fall 2022 semester of RISD’s Graphic Design MFA program. At the library, I examined at a vintage <a href="https://en.wikipedia.org/wiki/Whist" target="_blank">Whist</a> game board dating back at least 100 years. I tried to understand the game’s rules from the board, but I couldn’t — there was insufficient data. Cards were missing, no branding was visible, and a “patent pending” label lacked any real identification. What I was looking at no longer had info or history. Instead, it had degraded into a graphic artifact.</p>
 			<p>This arcade was inspired by that Whist board. Through these three games, I ask you to draw a line between play and meaning, or at least to question where this connection gets made in your head.</p>
-			<p><span class="about-info-rev">What about the “archive?”</span> I think of the archive as our collective human memory. What are the things of the past that affect our lives today? How do our actions create the archive of memory and legacy for future generations?</p>
+			<p><span class="about-info-rev">What does this mean?</span> This project originated as the “Archive Arcade,” which I created during the Graduate Studio I course taught by Bethany Johns and Ramon Tejada. I think of the “archive” as our collective human memory. What are the things of the past that affect our lives today? How do our actions create the archive of memory and legacy for future generations?</p>
+			<p>The three games were then called “Wreck,” “Witness,” and ”Write” to reflect the role of your passive participation. I’ve changed the names to hopefully make things clearer outside of the context of that course.</p>
 			<p>I leave these questions for you to answer (or just think about). You are a witness, and you are a participant, I suppose.</p>
 		</div>
 	</div>
@@ -512,7 +552,8 @@ TRIGGER WARNING MAYBE
 		let buttons = document.querySelectorAll("button");
 		let aboutBtnContainer = document.querySelectorAll(".about-btn-container");
 		function transition(e, link, transitionNumber) {
-			e.style.zIndex = "999";
+			let btnContainer = document.querySelector(`.choice-${transitionNumber}-container`);
+			btnContainer.style.zIndex = "999";
 			aboutBtnContainer[0].style.opacity = "0";
 			aboutBtnContainer[1].style.opacity = "0";
 			for (i=0; i<buttons.length; i++) {
@@ -527,6 +568,13 @@ TRIGGER WARNING MAYBE
 				window.location.href = link;
 			}, 1000);
 		}
+
+		// Refresh page on reload
+		window.onpageshow = function(event) {
+			if (event.persisted) {
+				window.location.reload() 
+			}
+		};
 	</script>
 </body>
 </html>

@@ -4,13 +4,22 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>ARCHIVE ARCADE > WRITE</title>
+	<title>Smile Through It > Present</title>
+
+	<meta name="author" content="Gabriel Drozdov">
+	<meta name="keywords" content="HTML, CSS, JavaScript, Video Game, Face Detection, Creative Coding">
+	<meta name="description" content="Smile to win, win to smile.">
+	<meta property="og:url" content="https://smilethroughit.noreplica.com/past/">
+	<meta name="og:title" property="og:title" content="Smile Through It > Present">
+	<meta property="og:description" content="Smile to win, win to smile.">
+	<meta property="og:image" content="./assets/branding/opengraph-yellow.png">
+
 	<link rel="stylesheet" href="../style.css">
-	<link rel="icon" href="../assets/favicon/favicon-blue.png">
+	<link rel="icon" href="../assets/favicon/favicon-yellow.png">
 
 	<style>
 		:root {
-			--primary: var(--blue);
+			--primary: var(--yellow);
 		}
 	</style>
 
@@ -24,17 +33,17 @@
 			<p>RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ RETURN HOME ↑ </p>
 		</button>
 		<h1 class="game-name">
-			<span class="game-name-line-2">Write</span>
-			<span class="game-name-line-1">Write</span>
-			<span class="game-name-line-0">Write</span>
-			<span class="game-name-line-1">Write</span>
-			<span class="game-name-line-2">Write</span>
+			<span class="game-name-line-2">Present</span>
+			<span class="game-name-line-1">Present</span>
+			<span class="game-name-line-0">Present</span>
+			<span class="game-name-line-1">Present</span>
+			<span class="game-name-line-2">Present</span>
 		</h1>
 		<div class="game-info">
 			<div class="game-info-desc">
 				<img src="../assets/branding/eyes.svg" class="game-info-eyes">
-				<p class="game-info-highlight">Write the archive.</p>
-				<p>Smile *only* when the letter turns blue! Try to get a new high score! <span class="game-info-outline">No matter what you see, keep smiling.</span></p>
+				<p class="game-info-highlight">Smile into the present.</p>
+				<p>Smile for as long as possible! Try to get a new high score! <span class="game-info-outline">No matter what you see, keep smiling.</span></p>
 				<p>Easy enough?</p>
 			</div>
 			<button class="game-info-start game-info-wait" onclick="startGame()">Loading...</button>
@@ -61,18 +70,19 @@
 						</g>
 					</svg>
 				</div>
+				<p id="smile-text">Smile!</p>
 			</div>
 			<div class="game-interface-container"><div class="game-interface">
 				<div id="game-score">Score: <span>0</span></div>
-				<div id="game-timer" class="timer-write">WAIT...</div>
+				<div id="game-timer">00.00</div>
 				<div id="game-highscore">Record: <span>0</span></div>
 			</div></div>
 		</div>
 		<div class="game-topics"></div>
 	</div>
 	<div class="game-end">
-		<div id="game-end-1">Congrats!<br>You smiled <span></span> times.</div>
-		<div id="game-end-2">That means you smiled through the making of <span id="rights"></span> atrocit<span id="rights-s">ies</span>.</div>
+		<div id="game-end-1">Congrats!<br>You smiled for <span></span> seconds.</div>
+		<div id="game-end-2">That means you smiled through <span id="rights"></span> headline<span id="rights-s">s</span>.</div>
 		<div id="game-end-3">You set a new record!</div>
 		<div class="game-end-buttons">
 			<button id="game-end-restart" onclick="startGame()">Play again?</button>
@@ -82,8 +92,8 @@
 	<div class="video-container"></div>
 
 	<script>
-		if (getCookie("write-highscore") == "") {
-				setCookie("write-highscore", 15, 30);
+		if (getCookie("witness-highscore") == "") {
+				setCookie("witness-highscore", 6, 30);
 		} 
 		let order = [];
 		let smileScore = 0;
@@ -95,6 +105,7 @@
 		let smileHead = document.querySelector(".smile-head");
 		let smileEyes = document.querySelector(".smile-eyes");
 		let smileMouth = document.querySelector(".smile-mouth");
+		let smileText = document.querySelector("#smile-text");
 		let score = document.querySelector("#game-score span");
 		let highscore = document.querySelector("#game-highscore span");
 		let transition1 = document.querySelector("#game-transition-1");
@@ -105,9 +116,12 @@
 		let gameEndWreck = document.querySelector("#game-end-2 #rights");
 		let gameEndWreckS = document.querySelector("#game-end-2 #rights-s");
 		let gameEndRecord = document.querySelector("#game-end-3");
+		let chances = 5;
 		function startGame() {
+			chances = 5;
 			order = [];
 			smileScore = 0;
+			score.innerText = smileScore;
 			end = true;
 			gameIntro.style.transform = "translateX(-110%)";
 			transition1.style.animationName = "";
@@ -128,12 +142,11 @@
 				nums.splice(j,1);
 			}
 			// Display highscore
-			if (getCookie("write-highscore") == "") {
-				highscore.innerText = "15";
+			if (getCookie("witness-highscore") == "") {
+				highscore.innerText = "6";
 			} else {
-				highscore.innerText = getCookie("write-highscore");
+				highscore.innerText = getCookie("witness-highscore");
 			}
-			round = 0;
 			setTimeout(function() {
 				transition1.style.animationName = "game-transition";
 				synth1.triggerAttackRelease("C4", "8n");
@@ -149,7 +162,9 @@
 							end = false;
 							smile.style.transform = "scale(1)";
 							interface.style.transform = "scale(1)";
+							smileText.style.transform = "scale(1)";
 							generateWord();
+							gameTimer();
 						}, 1500);
 					}, 1500);
 				}, 1500);
@@ -157,197 +172,147 @@
 		}
 
 		let topics = [
-			"Fascist World Leaders",
-			"International Conflict",
-			"Lawless Billionaires",
-			"Police Brutality",
-			"Voter Suppression",
-			"Microplastics",
-			"Extreme Weather",
-			"Late-stage Capitalism",
-			"Union Busting",
-			"Wildfires",
-			"Inflation",
-			"Anti-vaxxers",
-			"Radicalism",
-			"Monopolization",
-			"Corrupt Politicians",
-			"Depression",
-			"Mass Murder",
-			"Medical Debt",
-			"White Supremacy",
-			"Mass Extinction",
-			"Nuclear Proliferation",
-			"Forced Labor",
-			"Polarization",
-			"War Crimes",
-			"Religious Genocide",
-			"Global Recession",
-			"Soaring Tuition",
-			"Insurrection",
-			"Mass Surveillance",
-			"Natural Resource Depletion"
+			["Putin Orders ‘Special Military Operation’ In Eastern Ukraine", "Feb. 23, 2022"],
+			["Why These Australia Fires Are Like Nothing We’ve Seen Before", "Jan. 21, 2020"],
+			["New Focus on How a Trump Tweet Incited Far-Right Groups Ahead of Jan. 6", "March 29, 2022"],
+			["Florida Flies 2 Planeloads of Migrants to Martha’s Vineyard", "Sept. 14, 2022"],
+			["After 3 Mass Shootings, a Thanksgiving With 14 Empty Chairs", "Nov. 24, 2022"],
+			["Adidas Ends Partnership With Kanye West at a Considerable Cost", "Oct. 25, 2022"],
+			["Confusion and Frustration Reign as Elon Musk Cuts Half of Twitter’s Staff", "Nov. 4, 2022"],
+			["Donald Trump Is Elected President in Stunning Repudiation of the Establishment", "Nov. 9, 2016"],
+			["U.S. Says FIFA Officials Were Bribed to Award World Cups to Russia and Qatar", "April 6, 2020"],
+			["Attempts to Ban Books Are Accelerating and Becoming More Divisive", "Sept. 16, 2022"],
+			["In 6-to-3 Ruling, Supreme Court Ends Nearly 50 Years of Abortion Rights", "June 24, 2022"],
+			["Coronavirus in N.Y.: Manhattan Woman Is First Confirmed Case in State", "March 1, 2020"],
+			["Hidden Beneath the Ocean’s Surface, Nearly 16 Million Tons of Microplastic", "Oct. 7, 2020"],
+			["Despite Uproar Over Floyd’s Death, the Number of Fatal Encounters With Police Hasn’t Changed", "Dec. 24, 2021"],
+			["Food Prices Soar, and So Do Companies’ Profits", "Nov. 2, 2022"],
+			["How Social Media Amplifies Misinformation More Than Information", "Oct. 13, 2022"],
+			["Overdose Deaths Have Surged During the Pandemic, C.D.C. Data Shows", "April 14, 2021"],
+			["The ‘Unbelievable, Horrible, Crushing Weight’ of Student Loans", "April 22, 2022"],
+			["A ‘New Era of Air Pollution’ in the Tropics Could Have a Huge Toll", "April 8, 2022"],
+			["From Protester to Prisoner: How Hong Kong Is Stifling Dissent", "May 28, 2021"],
+			["What is a recession, and when is the next one going to begin?", "June 24, 2022"],
+			["Amazon Labor Union Loses Election at Warehouse Near Albany", "Oct. 18, 2022"],
+			["Shinzo Abe Is Assassinated With a Handmade Gun, Shocking a Nation", "July 9, 2022"],
+			["Is Spreading Medical Misinformation a Doctor’s Free Speech Right?", "Nov. 30, 2022"],
+			["QAnon Accounts Found a Home, and Trump’s Support, on Truth Social", "Aug. 29, 2022"],
+			["Warning on Mass Extinction of Sea Life: ‘An Oh My God Moment’", "April 28, 2022"],
+			["Climate Change Is Accelerating, Bringing World ‘Dangerously Close’ to Irreversible Change", "Dec. 4, 2019"],
+			["A Partial List of Mass Shootings in the United States in 2022", "Nov. 24, 2022"],
+			["Election Officials Say Efforts to Intimidate Voters Are Widening", "Nov. 3, 2022"],
+			["Jair Bolsonaro Wins Brazil’s Presidency, in a Shift to the Far Right", "Oct. 28, 2018"],
+			["Marcos Win Prompts Protests in the Philippines", "May 10, 2022"],
+			["As the Planet Cooks, Climate Stalls as a Political Issue","July 18, 2022"],
+			["For Monkeypox Patients, Excruciating Symptoms and a Struggle for Care","July 18, 2022"],
+			["U.S. Coronavirus Death Toll Surpasses 700,000 Despite Wide Availability of Vaccines","November 1, 2021"],
+			["More Than Half of Police Killings Are Mislabeled, New Study Says","September 30, 2021"],
+			["He was a baby on 9/11. Now he’s one of the last casualties of America’s longest war.","August 29, 2021"],
+			["Trump Wants U.S. ‘Opened Up’ by Easter, Despite Health Officials’ Warnings","March 25, 2020"],
+			["Cambridge Analytica, Trump-Tied Political Firm, Offered to Entrap Politicians","March 20, 2018"],
+			["‘It’s a Massacre’: Blast in Kabul Deepens Toll of a Long War","January 27, 2018"],
+			["Victims of Abuse by Religious Order Priests Say Their Claims Fall Through the Cracks","Jan. 9, 2019"],
+			["Iran Executes Man Over Nationwide Protests","Dec. 8, 2022"],
+			["U.S. Court Dismisses Suit Against Saudi Ruler in Khashoggi Killing","Dec. 7, 2022"],
+			["Europe’s Heat Wave Shatters British Records and Drives Wildfires","July 19, 2022"],
+			["Report on Uvalde Shooting Finds ‘Systemic Failures’ in Police Response","July 17, 2022"],
+			["What New Abortion Bans Mean for the Youngest Patients","July 25, 2022"],
+			["Biden Concedes Defeat on Climate Bill as Manchin and Inflation Upend Agenda","July 15, 2022"]
 		]
 		let gameTopic = document.querySelector(".game-topics");
 		let round = 0;
 		let subRound = 0;
 		let currentTopicE, letters;
-		let roundLength = 2;
-		let targetLetter = false;
-		let currentRound = 0;
-		let currentLetter = "";
-		let letterOptions = ["a","b",'c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
-		let buffer = 0;
 		// START SUBROUND
 		function generateWord() {
 			let currentTopic = topics[order[round]];
 			let temp = `<div class='game-topic-container'><div class='game-topic' id='round${round}' style="transform:scale(0);">`;
-			for (i=0; i<currentTopic.length; i++) {
-				temp += `<span style='transform:scale(0);opacity:0;'>${currentTopic[i]}</span>`;
-			}
+			temp += `<span>${currentTopic[0]}</span><span class="witness-date">${currentTopic[1]}</span>`;
 			temp += "</div></div>";
 			gameTopic.innerHTML += temp;
 			currentTopicE = document.querySelector(`#round${round}`);
-			letters = document.querySelectorAll(`#round${round} span`);
 			setTimeout(function () {
-				currentTopicE.style.transform = "scale(1)";
-			}, 10);
-			roundLength = Math.round(Math.random()*3+4);
+				currentTopicE.style.transform = "scale(.4)";
+			}, 1);
 			subRound = 0;
-			buffer = 0;
-			currentRound = 0;
-			currentLetter = letters[0].innerText;
-			synth2.triggerAttackRelease("B2", "8n");
-			for (i=0; i<letters.length; i++) {
-				letters[i].style.opacity = 1;
-			}
-			buildWord();
+			progressWord();
 		}
-
-		// GENERATE RANDOM LETTER
-		let prevLetter = "";
-		function randomLetter() {
-			let pickLetter = false;
-			let newLetter = "";
-			let pickNewLetter = false;
-			while (pickLetter == false) {
-				while (pickNewLetter == false) {
-					newLetter = letterOptions[Math.floor(Math.random()*letterOptions.length)];
-					if (newLetter.toUpperCase() != prevLetter.toUpperCase()) {
-						pickNewLetter = true;
-						prevLetter = newLetter;
-					}
-				}
-				if (newLetter.toUpperCase() != currentLetter.toUpperCase()) {
-					letters[currentRound].innerText = newLetter.toUpperCase();
-					pickLetter = true;
-				} else {
-					pickNewLetter = false;
-				}
-			}
-		}
-
 		// GO THROUGH SUBROUND
-		function buildWord() {
-			if (buffer >= 2) {
-				gameEnd();
-			} else if (currentRound >= letters.length) {
-				let dirR = 1;
+		function progressWord() {
+			let dirR = 1;
+			if (Math.random() < .5) {
+				dirR = -1;
+			}
+			if (subRound >= 0 && subRound < 10 && end == false) {
+				synth2.triggerAttackRelease("G4", "16n");
+				setTimeout(function () {
+					if (end == true) {
+						return
+					}
+					currentTopicE.style.transform = `rotate(${Math.random()*(2**(subRound/2))*dirR}deg) scale(${.5+subRound/10})`;
+					subRound ++;
+					progressWord();
+				}, 1000);
+			} else if (end == true) {
+				return
+			} else {
 				let dirX = 1;
 				let dirY = 1;
-				if (Math.random() < .5) {
-					dirR = -1;
-				}
 				if (Math.random() < .5) {
 					dirX = -1;
 				}
 				if (Math.random() < .5) {
 					dirY = -1;
 				}
-				currentTopicE.style.transform = `rotate(${Math.random()*10*dirR}deg) translate(${(Math.random()*5*dirX)+(25*dirX)}vw,${(Math.random()*25*dirY)}vh)`;
+				currentTopicE.style.transform = `rotate(${Math.random()*10*dirR}deg) scale(.5) translate(${(Math.random()*10*dirX)+(50*dirX)}vw,${(Math.random()*75*dirY)}vh)`;
+				currentTopicE.querySelector(".witness-date").style.opacity = "0";
 				currentTopicE.classList.add("game-word-faded");
 				round++;
-				synth3.triggerAttackRelease("G4", "16n");
-				setTimeout(function() {
+				setTimeout(function () {
+					if (end == true) {
+						return
+					}
+					smileScore ++;
+					score.innerText = smileScore;
+					synth3.triggerAttackRelease("G4", "16n");
 					generateWord();
-				}, 500);
-			} else if (currentLetter == "") {
-				currentRound++;
-				subRound = 0;
-				currentLetter = letters[currentRound].innerText;
-				buildWord();
-			} else if (subRound == 0) {
-				timer.innerText = "WAIT";
-				letters[currentRound].style = scale(1);
-				currentLetter = letters[currentRound].innerText;
-				synth2.triggerAttackRelease("B2", "8n");
-				randomLetter();
-				subRound++;
-				buildWord();
-			} else if (subRound > 0 && subRound < roundLength) {
-				timer.innerText = "WAIT";
-				setTimeout(function() {
-					synth2.triggerAttackRelease("B2", "8n");
-					randomLetter();
-					subRound++;
-					buildWord();
-					if (smiling == true) {
-						buffer += 3;
-					}
+					setTimeout(function () {
+					}, 500);
 				}, 500)
-			} else if (subRound >= roundLength) {
-				letters[currentRound].innerText = currentLetter.toUpperCase();
-				letters[currentRound].style.color = "var(--primary)";
-				timer.innerText = "SMILE!";
-				let checkLoop = 0;
-				let checkSmile = setInterval(function() {
-					if (smiling) {
-						clearInterval(checkSmile);
-						synth2.triggerAttackRelease("G4", "8n");
-						smileScore++;
-						score.innerText = smileScore;
-						let dirX = 1;
-						let dirY = 1;
-						if (Math.random() < .5) {
-							dirX = -1;
-						}
-						if (Math.random() < .5) {
-							dirY = -1;
-						}
-						roundLength = Math.round(Math.random()*3+4);
-						currentRound++;
-						subRound = 0;
-						if (currentRound != letters.length) {
-							currentLetter = letters[currentRound].innerText;
-						}
-						setTimeout(function() {
-							buildWord();
-						}, 500);
-					} else if (checkLoop == 15) {
-						clearInterval(checkSmile);
-						gameEnd();
-					}
-					checkLoop += 1;
-				}, 100);
 			}
+		}
+
+		// GAME TIMER
+		let time = 0;
+		function gameTimer() {
+			time = 0;
+			let timeLoop = setInterval(function () {
+				time = (Math.round((parseFloat(time)+.01)*100)/100).toFixed(2);
+				timer.innerHTML = time;
+				if (end == true || round == topics.length) {
+					clearInterval(timeLoop);
+				}
+			}, 10);
 		}
 
 		// GAME END SCREEN
 		function gameEnd() {
+			end = true;
 			synth1.triggerAttackRelease("C5", "4n");
 			currentTopicE.style.transform = "scale(0)";
 			smile.style.transform = "scale(0)";
 			interface.style.transform = "scale(0)";
+			smileText.style.transform = "scale(0)";
 			gameEndContainer.style.transform = "scale(1)";
-			gameEndScore.innerText = smileScore;
-			gameEndWreck.innerText = round;
-			if (round == 1) {
-				gameEndWreckS.innerText = "y";
+			gameEndScore.innerText = time;
+			gameEndWreck.innerText = smileScore;
+			if (smileScore == 1) {
+				gameEndWreckS.style.display = "none";
 			} else {
-				gameEndWreckS.innerText = "ies";
+				gameEndWreckS.style.display = "inline";
 			}
-			if (parseInt(getCookie("write-highscore")) < smileScore) {
-				setCookie("write-highscore", smileScore, 30);
+			if (parseInt(getCookie("witness-highscore")) < smileScore) {
+				setCookie("witness-highscore", smileScore, 30);
 				gameEndRecord.style.display = "block";
 			} else {
 				gameEndRecord.style.display = "none";
@@ -406,6 +371,7 @@
 			faceapi.detect(gotFaces); // Call the function again at here
 		}
 
+		let smileDelay = false;
 		function detectSmile(detections) {
 			if (detections.length > 0) { // If at least 1 face is detected
 				if (end == false) {
@@ -414,16 +380,45 @@
 						if (happy < .2) {
 							smile.classList.remove("game-smile-active");
 							smileMouth.style.transform = "scaleY(-1)";
-							smiling = false;
+							smileText.innerText = "SMILE!";
+							smileText.style.color = "var(--primary)";
+							if (smileDelay == false) {
+								synth2.triggerAttackRelease("B2", "8n");
+								smileDelay = true;
+								penalty();
+							}
 						} else if (happy > .2) {
 							smile.classList.add("game-smile-active");
 							smileMouth.style.transform = "scaleY(1)";
-							smiling = true;
+							smileText.innerText = "KEEP SMILING!";
+							smileText.style.color = "var(--white)";
 						}
 					}
 				}
-			} else { // If no faces are detected
+			} else {
+				if (end == false) {
+					smile.classList.remove("game-smile-active");
+					smileMouth.style.transform = "scaleY(-1)";
+					smileText.innerText = "SMILE!";
+					smileText.style.color = "var(--primary)";
+					if (smileDelay == false) {
+						synth2.triggerAttackRelease("B2", "8n");
+						smileDelay = true;
+						penalty();
+					}
+				}
 			}
+		}
+		function penalty() {
+			chances--;
+			if (chances == 0) {
+				gameEnd();
+				smileDelay = false;
+				return
+			}
+			setTimeout(function() {
+				smileDelay = false;
+			}, 500);
 		}
 
 		// COOKIE FUNCTIONS
@@ -505,6 +500,6 @@
 			}
 		});
 		synth3.chain(vol, Tone.Destination);
-	</script>
+	</script>	
 </body>
 </html>
